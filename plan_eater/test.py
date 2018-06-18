@@ -59,3 +59,4 @@ def update_json(plan):
         json.dump(placement_dict, outfile)
     print (week_list)
 update_json('C:/Users/szaval01/Documents/Custom Office Templates/template.xltm')
+xyu
