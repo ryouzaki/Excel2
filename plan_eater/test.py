@@ -16,7 +16,6 @@ def create_new_json(plan):
     while mediaplan_sheet.cell(row = 4, column= i).value != "end":
         i+=1
         placement_dict.update({mediaplan_sheet.cell(row = 4, column= i).value:mediaplan_sheet.cell(row = 12, column= i).value})
-
         if ((i>9 and i<375) and mediaplan_sheet.cell(row = 12, column= i).value == 1):
             weeknumber_set.add((mediaplan_sheet.cell(row = 10, column= i).value).isocalendar()[1])
             print (weeknumber_set)
