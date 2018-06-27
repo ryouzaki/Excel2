@@ -38,9 +38,9 @@
   "cpp": 555,
   "postclick": [
     {
-      "weeknumber": 25,
+      "weeknumber": 26,
       "budget": null,
-      "impressions": null,
+      "impressions": 12000000,
       "views": null,
       "clicks": null,
       "reach": null
@@ -69,6 +69,5 @@
       "clicks": null,
       "reach": null
     }
-  ],
-  "null": null
+  ]
 }

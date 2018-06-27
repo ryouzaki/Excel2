@@ -78,8 +78,10 @@ def parse_amnet():
                 report_dict.update({week_report_sheet.cell(row=row+1, column=1).value: week_report_sheet.cell(row=row+1, column=2).value})
                 row+=1
             print(report_dict)
-            with open(str(os.getcwd()) + '\\MP\\' + placement_id + '.json', 'r') as infile:
+            with open(str(os.getcwd()) + '\\MP\\' + placement_id + '.json', 'r+') as infile:
                 placement_dict = json.load(infile)
+                infile.seek(0)
+                infile.truncate()
                 week_list = placement_dict['postclick']
                 for week_info in week_list:
                     if week_info['weeknumber'] == datetime.datetime.today().isocalendar()[1]:
@@ -87,8 +89,12 @@ def parse_amnet():
                         print(report_dict)
                         for stat in week_info.keys():
                             week_info.update({stat:report_dict.get(stat)})
+                            week_info.update({'weeknumber':datetime.datetime.today().isocalendar()[1]})
                         print (week_info)
-            report_dict.clear()
+                print (week_list)
+                placement_dict.update({'postclick': week_list})
+                json.dump(placement_dict, infile)
+                report_dict.clear()
             # with open(str(os.getcwd()) + '\\MP\\' + str(week_report_sheet.cell(row=row, column=1).value) + '.json', 'r') as infile:
             #     print (str(week_report_sheet.cell(row=row, column=1).value))
             #     placement_dict = json.load(infile)
