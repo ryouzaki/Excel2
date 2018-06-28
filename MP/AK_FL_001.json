@@ -1,11 +1,12 @@
 {
   "kpi": "Awareness",
+  "placement_category": "OLV",
   "platform_site": "MyWidget",
   "description": "mywi",
   "format": "Articles",
   "price_model": "CPC",
   "null": null,
-  "=COLUMN(H4)": "weeks",
+  "=COLUMN(I4)": "weeks",
   "Impressions": 4141,
   "unit_price": 22,
   "unit_quantity": 33333,
@@ -39,7 +40,7 @@
   "cpp": 555,
   "postclick": [
     {
-      "weeknumber": 26,
+      "weeknumber": 40,
       "budget": null,
       "impressions": null,
       "views": null,

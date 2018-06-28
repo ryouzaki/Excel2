@@ -119,8 +119,9 @@ def create_report(week):
                     placement_dict = json.load(infile)
                     for value in placement_dict['postclick']:
                         if str(value['weeknumber']) == sheet.title:
-                            sheet.cell(row=sheet.max_row, column=sheet.max_column+1, value = jsonplan)
-                            sheet.cell(row=sheet.max_row+1, column=sheet.max_column, value = placement_dict['kpi'])
+                            sheet.cell(row=sheet.max_row+1, column=1, value = jsonplan)
+                            sheet.cell(row=sheet.max_row, column=2, value = placement_dict['kpi'])
+                            sheet.cell(row=sheet.max_row, column=3, value = placement_dict['placement_category'])
                             print (sheet.max_row)
     report.save(os.getcwd()+'\\Reports\\Client\\'+str(datetime.datetime.today().isocalendar()[1])+'.xlsx')
     return
