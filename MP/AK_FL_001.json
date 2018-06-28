@@ -1,10 +1,11 @@
 {
-  "null": null,
+  "kpi": "Awareness",
   "platform_site": "MyWidget",
   "description": "mywi",
   "format": "Articles",
   "price_model": "CPC",
-  "=COLUMN(I4)": "weeks",
+  "null": null,
+  "=COLUMN(H4)": "weeks",
   "Impressions": 4141,
   "unit_price": 22,
   "unit_quantity": 33333,
@@ -40,7 +41,15 @@
     {
       "weeknumber": 26,
       "budget": null,
-      "impressions": 12000000,
+      "impressions": null,
+      "views": null,
+      "clicks": null,
+      "reach": null
+    },
+    {
+      "weeknumber": 18,
+      "budget": null,
+      "impressions": null,
       "views": null,
       "clicks": null,
       "reach": null
@@ -55,14 +64,6 @@
     },
     {
       "weeknumber": 7,
-      "budget": null,
-      "impressions": null,
-      "views": null,
-      "clicks": null,
-      "reach": null
-    },
-    {
-      "weeknumber": 40,
       "budget": null,
       "impressions": null,
       "views": null,

@@ -14,7 +14,7 @@ def create_new_json(plan):
         if re.search('\w\w_\w\w_\d\d\d', str(mediaplan_sheet.cell(row=last_row, column=1).value)):
             placement_dict.clear()
             weeknumber_set.clear()
-            last_column = 1
+            last_column = 2
             while mediaplan_sheet.cell(row=4, column=last_column).value != "end":
                 placement_dict.update({mediaplan_sheet.cell(row=4, column=last_column).value: mediaplan_sheet.cell(
                     row=last_row, column=last_column).value})
@@ -68,7 +68,6 @@ def parse_amnet():
     week_report_sheet = report[str(datetime.datetime.today().isocalendar()[1])]
     report_dict = dict()
     row = int()
-    placement_id = str()
     while row < week_report_sheet.max_row:
         row+=1
         if re.search('\w\w_\w\w_\d\d\d', str(week_report_sheet.cell(row=row, column=1).value)):
@@ -95,15 +94,33 @@ def parse_amnet():
                 placement_dict.update({'postclick': week_list})
                 json.dump(placement_dict, infile)
                 report_dict.clear()
-            # with open(str(os.getcwd()) + '\\MP\\' + str(week_report_sheet.cell(row=row, column=1).value) + '.json', 'r') as infile:
-            #     print (str(week_report_sheet.cell(row=row, column=1).value))
-            #     placement_dict = json.load(infile)
-            #     week_list = placement_dict['postclick']
-            #     for dict in week_list:
-            #         if dict['weeknumber'] == datetime.datetime.today().isocalendar()[1]:
-            #             while week_report_sheet.cell(row=row, column=1).value != None:
-            #                 row+=1
-            #                 for stat in dict:
-            #                     print (stat)
-            #                 print (week_report_sheet.cell(row=row, column=1).value)
+    return
+
+
+def create_report(week):
+    report = Workbook()
+    week_set = set()
+    for jsonplan in os.listdir(os.getcwd() + '\\MP\\'):
+        if jsonplan.endswith('.json'):
+            with open(str(os.getcwd()) + '\\MP\\' + jsonplan, 'r') as infile:
+                placement_dict = json.load(infile)
+                for value in placement_dict['postclick']:
+                    if value['weeknumber'] < datetime.datetime.today().isocalendar()[1]:
+                        week_set.add(value['weeknumber'])
+    for week in sorted(week_set):
+        report.create_sheet(str(week))
+
+    #insert plan data and periods of placement
+    for sheet in report.worksheets:
+        sheet.merge_cells(start_row = 7, start_column=1, end_row=9,end_column=1)
+        for jsonplan in os.listdir(os.getcwd() + '\\MP\\'):
+            if jsonplan.endswith('.json'):
+                with open(str(os.getcwd()) + '\\MP\\' + jsonplan, 'r') as infile:
+                    placement_dict = json.load(infile)
+                    for value in placement_dict['postclick']:
+                        if str(value['weeknumber']) == sheet.title:
+                            sheet.cell(row=sheet.max_row, column=sheet.max_column+1, value = jsonplan)
+                            sheet.cell(row=sheet.max_row+1, column=sheet.max_column, value = placement_dict['kpi'])
+                            print (sheet.max_row)
+    report.save(os.getcwd()+'\\Reports\\Client\\'+str(datetime.datetime.today().isocalendar()[1])+'.xlsx')
     return
