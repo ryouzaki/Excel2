@@ -56,7 +56,7 @@ def update_json(plan):
             print (week_list)
             for weeknumber in weeknumber_set:
 
-                week_list.append({'weeknumber': weeknumber, 'budget': None, 'impressions': None, 'views': None, 'clicks': None,'reach': None})
+                week_list.append({'weeknumber': weeknumber, 'budget_fact': None, 'impressions_fact': None, 'views_fact': None, 'clicks_fact': None,'reach_fact': None})
             placement_dict.update({'postclick': week_list})
             with open(str(os.path.dirname(plan)) + '\\' + str(mediaplan_sheet.cell(row=last_row, column=1).value) + '.json', 'w') as outfile:
                 json.dump(placement_dict, outfile)
@@ -74,7 +74,7 @@ def parse_amnet():
             placement_id = str(week_report_sheet.cell(row=row, column=1).value)
             print (str(week_report_sheet.cell(row=row, column=1).value))
             while week_report_sheet.cell(row=row+1, column=1).value != None:
-                report_dict.update({week_report_sheet.cell(row=row+1, column=1).value: week_report_sheet.cell(row=row+1, column=2).value})
+                report_dict.update({str(week_report_sheet.cell(row=row+1, column=1).value)+"_fact": week_report_sheet.cell(row=row+1, column=2).value})
                 row+=1
             print(report_dict)
             with open(str(os.getcwd()) + '\\MP\\' + placement_id + '.json', 'r+') as infile:
@@ -98,7 +98,7 @@ def parse_amnet():
 
 
 def create_report(week):
-    report = Workbook()
+    report = load_workbook(os.getcwd()+'\Reports\\'+ 'Template.xlsx')
     week_set = set()
     for jsonplan in os.listdir(os.getcwd() + '\\MP\\'):
         if jsonplan.endswith('.json'):
@@ -108,20 +108,22 @@ def create_report(week):
                     if value['weeknumber'] < datetime.datetime.today().isocalendar()[1]:
                         week_set.add(value['weeknumber'])
     for week in sorted(week_set):
-        report.create_sheet(str(week))
-
-    #insert plan data and periods of placement
-    for sheet in report.worksheets:
-        sheet.merge_cells(start_row = 7, start_column=1, end_row=9,end_column=1)
+        source = report.active
+        target = report.copy_worksheet(source)
         for jsonplan in os.listdir(os.getcwd() + '\\MP\\'):
             if jsonplan.endswith('.json'):
                 with open(str(os.getcwd()) + '\\MP\\' + jsonplan, 'r') as infile:
                     placement_dict = json.load(infile)
-                    for value in placement_dict['postclick']:
-                        if str(value['weeknumber']) == sheet.title:
-                            sheet.cell(row=sheet.max_row+1, column=1, value = jsonplan)
-                            sheet.cell(row=sheet.max_row, column=2, value = placement_dict['kpi'])
-                            sheet.cell(row=sheet.max_row, column=3, value = placement_dict['placement_category'])
-                            print (sheet.max_row)
-    report.save(os.getcwd()+'\\Reports\\Client\\'+str(datetime.datetime.today().isocalendar()[1])+'.xlsx')
+                    last_column = 1
+                    last_row = target.max_row+1
+                    while (target.cell(row=5, column = last_column).value) != "end":
+                        if (target.cell(row=5, column = last_column).value) != None:
+                            if (target.cell(row=5, column = last_column).value).endswith("_fact"):
+                                print (target.cell(row=5, column = last_column).value)
+                            else:
+                                target.cell(row=last_row, column=last_column, value = placement_dict[target.cell(row=5, column = last_column).value])
+                        last_column+=1
+        d = str(datetime.datetime.now().year) + '-W' + str(week)
+        target.title = datetime.datetime.strftime(datetime.datetime.strptime(d + '-1', "%Y-W%W-%w"),"%d-%b-%Y") + " -- " + datetime.datetime.strftime(datetime.datetime.strptime(d + '-1', "%Y-W%W-%w")+datetime.timedelta(days=6),"%d-%b-%Y")
+    report.save(os.getcwd()+'\Reports\\Client\\'+ 'Report_week' +str(datetime.datetime.today().isocalendar()[1])+'.xlsx')
     return
