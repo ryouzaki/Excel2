@@ -1,1 +1,64 @@
-{"stage": "Consideration", "category": "Programmatic", "platform_site": "DCA", "description": "dca", "format": "Carousel", "price_model": "CPC", "plan_impressions": 11111111, "plan_reach": 4444, "plan_budget": 99, "plan_clicks": 16161, "plan_views": 19191, "postclick": [{"weeknumber": 6, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 7, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 10, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 27, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 40, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}]}
+{
+  "stage": "Consideration",
+  "category": "Programmatic",
+  "platform_site": "DCA",
+  "description": "dca",
+  "format": "Carousel",
+  "price_model": "CPC",
+  "plan_impressions": 11111111,
+  "plan_reach": 4444,
+  "plan_budget": 99,
+  "plan_clicks": 16161,
+  "plan_views": 19191,
+  "adriver_id": null,
+  "postclick": [
+    {
+      "weeknumber": 6,
+      "fact_budget": 520000,
+      "fact_impressions": 4000000,
+      "fact_views": 520000,
+      "fact_clicks": 8000,
+      "fact_reach": 1142857
+    },
+    {
+      "weeknumber": 7,
+      "fact_budget": 520000,
+      "fact_impressions": 4000000,
+      "fact_views": 520000,
+      "fact_clicks": 8000,
+      "fact_reach": 1142857
+    },
+    {
+      "weeknumber": 10,
+      "fact_budget": 520000,
+      "fact_impressions": 4000000,
+      "fact_views": 520000,
+      "fact_clicks": 8000,
+      "fact_reach": 1142857
+    },
+    {
+      "weeknumber": 27,
+      "fact_budget": 520000,
+      "fact_impressions": 4000000,
+      "fact_views": 520000,
+      "fact_clicks": 8000,
+      "fact_reach": 1142857
+    },
+    {
+      "weeknumber": 28,
+      "fact_budget": 520000,
+      "fact_impressions": 4000000,
+      "fact_views": 520000,
+      "fact_clicks": 8000,
+      "fact_reach": 1142857
+    },
+    {
+      "weeknumber": 40,
+      "fact_budget": null,
+      "fact_impressions": null,
+      "fact_views": null,
+      "fact_clicks": null,
+      "fact_reach": null
+    }
+  ]
+}

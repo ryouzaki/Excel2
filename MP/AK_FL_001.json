@@ -9,39 +9,48 @@
   "plan_reach": 4444,
   "plan_budget": 99,
   "plan_clicks": 16161,
-  "plan_views": null,
+  "plan_views": 16161,
+  "adriver_id": 2737205,
   "postclick": [
     {
       "weeknumber": 6,
-      "fact_budget": 12,
-      "fact_impressions": null,
-      "fact_views": null,
-      "fact_clicks": null,
-      "fact_reach": null
+      "fact_budget": 2300000,
+      "fact_impressions": 12000000,
+      "fact_views": 2000000,
+      "fact_clicks": 50000,
+      "fact_reach": 4000000
     },
     {
       "weeknumber": 7,
-      "fact_budget": null,
-      "fact_impressions": null,
-      "fact_views": null,
-      "fact_clicks": null,
-      "fact_reach": null
+      "fact_budget": 2300000,
+      "fact_impressions": 12000000,
+      "fact_views": 2000000,
+      "fact_clicks": 50000,
+      "fact_reach": 4000000
     },
     {
       "weeknumber": 18,
-      "fact_budget": null,
-      "fact_impressions": null,
-      "fact_views": null,
-      "fact_clicks": null,
-      "fact_reach": null
+      "fact_budget": 2300000,
+      "fact_impressions": 12000000,
+      "fact_views": 2000000,
+      "fact_clicks": 50000,
+      "fact_reach": 4000000
     },
     {
       "weeknumber": 27,
-      "fact_budget": 11,
-      "fact_impressions": null,
-      "fact_views": null,
-      "fact_clicks": null,
-      "fact_reach": null
+      "fact_budget": 2300000,
+      "fact_impressions": 12000000,
+      "fact_views": 2000000,
+      "fact_clicks": 50000,
+      "fact_reach": 4000000
+    },
+    {
+      "weeknumber": 28,
+      "fact_budget": 2300000,
+      "fact_impressions": 12000000,
+      "fact_views": 2000000,
+      "fact_clicks": 50000,
+      "fact_reach": 4000000
     },
     {
       "weeknumber": 40,

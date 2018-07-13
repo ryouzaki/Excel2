@@ -1,1 +1,72 @@
-{"stage": "Consideration", "category": "Programmatic", "platform_site": "GDN", "description": "gdn", "format": "Sponsored cards", "price_model": "CPC", "plan_impressions": 11111111, "plan_reach": 4444, "plan_budget": 99, "plan_clicks": 16161, "plan_views": 19191, "postclick": [{"weeknumber": 6, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 7, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 12, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 27, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 40, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 40, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 33, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}]}
+{
+  "stage": "Consideration",
+  "category": "Programmatic",
+  "platform_site": "GDN",
+  "description": "gdn",
+  "format": "Sponsored cards",
+  "price_model": "CPC",
+  "plan_impressions": 11111111,
+  "plan_reach": 4444,
+  "plan_budget": 99,
+  "plan_clicks": 16161,
+  "plan_views": 19191,
+  "adriver_id": 2735960,
+  "postclick": [
+    {
+      "weeknumber": 6,
+      "fact_budget": 803400,
+      "fact_impressions": 6180000,
+      "fact_views": 2163000,
+      "fact_clicks": 12360,
+      "fact_reach": 1545000
+    },
+    {
+      "weeknumber": 7,
+      "fact_budget": 803400,
+      "fact_impressions": 6180000,
+      "fact_views": 2163000,
+      "fact_clicks": 12360,
+      "fact_reach": 1545000
+    },
+    {
+      "weeknumber": 12,
+      "fact_budget": 803400,
+      "fact_impressions": 6180000,
+      "fact_views": 2163000,
+      "fact_clicks": 12360,
+      "fact_reach": 1545000
+    },
+    {
+      "weeknumber": 27,
+      "fact_budget": 803400,
+      "fact_impressions": 6180000,
+      "fact_views": 2163000,
+      "fact_clicks": 12360,
+      "fact_reach": 1545000
+    },
+    {
+      "weeknumber": 28,
+      "fact_budget": 803400,
+      "fact_impressions": 6180000,
+      "fact_views": 2163000,
+      "fact_clicks": 12360,
+      "fact_reach": 1545000
+    },
+    {
+      "weeknumber": 33,
+      "fact_budget": null,
+      "fact_impressions": null,
+      "fact_views": null,
+      "fact_clicks": null,
+      "fact_reach": null
+    },
+    {
+      "weeknumber": 40,
+      "fact_budget": null,
+      "fact_impressions": null,
+      "fact_views": null,
+      "fact_clicks": null,
+      "fact_reach": null
+    }
+  ]
+}

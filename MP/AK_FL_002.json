@@ -1,1 +1,48 @@
-{"stage": "Consideration", "category": "Social Media", "platform_site": "Vk.com", "description": "vk", "format": "Mobile video ad", "price_model": "CPC", "plan_impressions": 11111111, "plan_reach": 4444, "plan_budget": 99, "plan_clicks": 16161, "plan_views": 19191, "postclick": [{"weeknumber": 14, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 27, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}, {"weeknumber": 40, "fact_budget": null, "fact_impressions": null, "fact_views": null, "fact_clicks": null, "fact_reach": null}]}
+{
+  "stage": "Consideration",
+  "category": "Social Media",
+  "platform_site": "Vk.com",
+  "description": "vk",
+  "format": "Mobile video ad",
+  "price_model": "CPC",
+  "plan_impressions": 11111111,
+  "plan_reach": 4444,
+  "plan_budget": 99,
+  "plan_clicks": 16161,
+  "plan_views": 19191,
+  "adriver_id": 2737203,
+  "postclick": [
+    {
+      "weeknumber": 14,
+      "fact_budget": 1056000,
+      "fact_impressions": 6600000,
+      "fact_views": 5940000,
+      "fact_clicks": 3300,
+      "fact_reach": 2200000
+    },
+    {
+      "weeknumber": 27,
+      "fact_budget": 1056000,
+      "fact_impressions": 6600000,
+      "fact_views": 5940000,
+      "fact_clicks": 3300,
+      "fact_reach": 2200000
+    },
+    {
+      "weeknumber": 28,
+      "fact_budget": 1056000,
+      "fact_impressions": 6600000,
+      "fact_views": 5940000,
+      "fact_clicks": 3300,
+      "fact_reach": 2200000
+    },
+    {
+      "weeknumber": 40,
+      "fact_budget": null,
+      "fact_impressions": null,
+      "fact_views": null,
+      "fact_clicks": null,
+      "fact_reach": null
+    }
+  ]
+}
