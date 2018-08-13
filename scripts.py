@@ -14,85 +14,18 @@ from pymongo import MongoClient
 from openpyxl.utils import column_index_from_string
 
 
-def update_json(placement_id, key=None, value=None, week=None):
-    PLACEMENT_ID_PATTERN = '\w\w_\w\w_\d\d\d'
-    LIST_OF_PLACEMENT_INFO_FIELDS = ['placement_info_category', 'placement_info_description', 'placement_info_format', 'placement_info_platform', 'placement_info_pricemodel', 'placement_info_stage']
-    LIST_OF_PLACEMENT_PLAN_FIELDS = ['placement_plan_budget', 'placement_plan_clicks', 'placement_plan_impressions', 'placement_plan_reach', 'placement_plan_views', 'placement_plan_weeks']
-    LIST_OF_PLACEMENT_STATS_FIELDS = ['placement_stats_adriverid', 'placement_stats_dcmid', 'placement_stats_tnscampaign','placement_stats_utmcampaign', 'placement_stats_ymcounter']
-
-    POSTCLICK_KEY = 'postclick'
-    PLAN_WEEKS_KEY = 'plan_weeks'
-    WEEKNUMBER_KEY = 'weeknumber'
-    CREATIVES_KEY = 'creatives'
-    if not os.path.exists(JSON_DIRECTORY):
-        os.makedirs(JSON_DIRECTORY)
-    if re.search(PLACEMENT_ID_PATTERN, placement_id):
-        if not os.path.isfile(JSON_DIRECTORY + placement_id + '.json'):
-            with open(JSON_DIRECTORY + placement_id + '.json', 'w') as outfile:
-                placement = dict()
-                placement.update({PLAN_WEEKS_KEY:list()})
-                placement.update({POSTCLICK_KEY:list()})
-                placement.update({CREATIVES_KEY:list()})
-                json.dump(placement, outfile)
-    if key in LIST_OF_PLACEMENT_PLAN_FIELDS and value is not None:
-        if os.path.isfile(JSON_DIRECTORY + placement_id + '.json'):
-            with open(JSON_DIRECTORY + placement_id + '.json', 'r+') as outfile:
-                placement = json.load(outfile)
-                placement.update({key:value})
-                outfile.seek(0)
-                outfile.truncate()
-                json.dump(placement, outfile)
-        else:
-            print ('Something wrong, no .json file for this placement')
-    if week is not None and key in LIST_OF_PLACEMENT_FACT_FIELDS and value is not None:
-        if os.path.isfile(JSON_DIRECTORY + placement_id + '.json'):
-            with open(JSON_DIRECTORY + placement_id + '.json', 'r+') as outfile:
-                placement = json.load(outfile)
-                placement_postclick = placement.get(POSTCLICK_KEY)
-                list_of_postclick_weeks = list(week_postclick.get(WEEKNUMBER_KEY) for week_postclick in placement_postclick)
-                week_postclick = dict()
-                if week not in list_of_postclick_weeks:
-                    week_postclick.update({WEEKNUMBER_KEY:week})
-                    week_postclick.update({str(key):value})
-                    placement_postclick.append(week_postclick)
-                    placement.update({POSTCLICK_KEY:placement_postclick})
-                else:
-                    week_postclick = list(week_postclick for week_postclick in placement_postclick if week_postclick.get(WEEKNUMBER_KEY) == week)[0]
-                    week_postclick.update({str(key):value})
-                    print (week_postclick)
-                outfile.seek(0)
-                outfile.truncate()
-                json.dump(placement, outfile)
-    return
-
-
 def parse_plan(filename):
     plan = load_workbook(filename=filename, data_only=True)
     mediaplan_sheet = plan['MediaPlan']
-    for row in mediaplan_sheet.iter_rows(min_col=1,max_col=1):
+    fields_row = get_fields_row(mediaplan_sheet)
+    for row in mediaplan_sheet.iter_rows(min_col=2,max_col=mediaplan_sheet.max_column):
+        is_placement_row = False
         for cell in row:
             if re.search('\w\w_\w\w_\d\d\d', str(cell.value)):
-                if not os.path.exists(str(os.path.dirname(plan)) + '\\JSON\\'):
-                    os.makedirs(str(os.path.dirname(plan)) + '\\JSON\\')
-                if not os.path.isfile(str(os.path.dirname(plan)) + '\\JSON\\' + cell.value + '.json'):
-                    with open(str(os.path.dirname(plan)) + '\\JSON\\'+ cell.value + '.json', 'w') as outfile:
-                         placement_dict = make_placement_dict(mediaplan_sheet,cell.row)
-                         postclick = list()
-                         placement_dict.update({'postclick':postclick})
-                         json.dump(placement_dict, outfile)
-                else:
-                    with open(str(os.path.dirname(plan)) + '\\JSON\\'+ cell.value + '.json', 'r+') as outfile:
-                        placement_dict = json.load(outfile)
-                        postclick = placement_dict.get('postclick')
-                        outfile.seek(0)
-                        outfile.truncate()
-                        placement_dict = make_placement_dict(mediaplan_sheet,cell.row)
-                        if postclick:
-                            placement_dict.update({'postclick':postclick})
-                        else:
-                            postclick = list()
-                            placement_dict.update({'postclick':postclick})
-                        json.dump(placement_dict, outfile)
+                is_placement_row = True
+                placement_id = str(cell.value)
+            if is_placement_row and mediaplan_sheet.cell(row=fields_row,column=column_index_from_string(cell.column)).value:
+                updateDatabase(placement_id=placement_id, field=mediaplan_sheet.cell(row=fields_row,column=column_index_from_string(cell.column)).value, value=cell.value)
     return
 
 
@@ -587,24 +520,18 @@ def get_ym_value(week):
         r = requests.get(url = url)
         print (r.content)
 
-def updateDatabase(placement_id = None, field = None, week = None):
+def updateDatabase(placement_id = None, field = None, value = None, week = None):
     PLACEMENT_ID = 'placement_id'
     LIST_OF_PLACEMENT_INFO_FIELDS = ['placement_info_category', 'placement_info_description', 'placement_info_format', 'placement_info_platform', 'placement_info_pricemodel', 'placement_info_stage']
     LIST_OF_PLACEMENT_PLAN_FIELDS = ['placement_plan_budget', 'placement_plan_clicks', 'placement_plan_impressions', 'placement_plan_reach', 'placement_plan_views', 'placement_plan_weeks']
     LIST_OF_PLACEMENT_STATS_FIELDS = ['placement_stats_adriverid', 'placement_stats_dcmid', 'placement_stats_tnscampaign','placement_stats_utmcampaign', 'placement_stats_ymcounter']
-    client = MongoClient()
     client = MongoClient('localhost', 27017)
     db = client['VizeumHealth']
     collection = db['Placements']
-    placement_id = 'XX_XX_000'
-    collection.update_one({'placement_id':placement_id}, {"$set": {'placement_id':placement_id}}, upsert=True)
-    #if field in LIST_OF_PLACEMENT_INFO_FIELDS or field in LIST_OF_PLACEMENT_PLAN_FIELDS or field in LIST_OF_PLACEMENT_STATS_FIELDS:
-
-
-    print (db.collection_names(include_system_collections=False))
+    collection.update_one({PLACEMENT_ID:placement_id}, {"$set": {field:value}}, upsert=True)
 
 
 if __name__ == '__main__':
-    updateDatabase()
+    main()
 
 
