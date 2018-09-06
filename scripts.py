@@ -25,25 +25,9 @@ def parse_plan(filename):
                 is_placement_row = True
                 placement_id = str(cell.value)
             if is_placement_row and mediaplan_sheet.cell(row=fields_row,column=column_index_from_string(cell.column)).value:
-                updateDatabase(placement_id=placement_id, field=mediaplan_sheet.cell(row=fields_row,column=column_index_from_string(cell.column)).value, value=cell.value)
+                db = mongoDB()
+                db.updatePlacement(placement_id=placement_id, field=mediaplan_sheet.cell(row=fields_row,column=column_index_from_string(cell.column)).value, value=cell.value)
     return
-
-
-def make_placement_dict(mediaplan_sheet, placement_row):
-    placement_dict = dict()
-    weeknumber_set = set()
-    fields_row = get_fields_row(mediaplan_sheet)
-    for row in mediaplan_sheet.iter_rows(min_row=placement_row,max_row=placement_row):
-        for cell in row:
-            if mediaplan_sheet.cell(row=fields_row, column=column_index_from_string(cell.column)).value is not None:
-                if re.search('\d{1,2}', str(mediaplan_sheet.cell(row=fields_row, column=column_index_from_string(cell.column)).value)):
-                    if cell.value == 1:
-                        weeknumber_set.add(int(mediaplan_sheet.cell(row=fields_row, column=column_index_from_string(cell.column)).value))
-                else:
-                    placement_dict.update({mediaplan_sheet.cell(row=fields_row, column=column_index_from_string(cell.column)).value:cell.value})
-    placement_dict.update({'plan_weeks':list(weeknumber_set)})
-    return placement_dict
-
 
 def parse_amnet(week):
     week_number = int(week)
@@ -520,15 +504,18 @@ def get_ym_value(week):
         r = requests.get(url = url)
         print (r.content)
 
-def updateDatabase(placement_id = None, field = None, value = None, week = None):
-    PLACEMENT_ID = 'placement_id'
-    LIST_OF_PLACEMENT_INFO_FIELDS = ['placement_info_category', 'placement_info_description', 'placement_info_format', 'placement_info_platform', 'placement_info_pricemodel', 'placement_info_stage']
-    LIST_OF_PLACEMENT_PLAN_FIELDS = ['placement_plan_budget', 'placement_plan_clicks', 'placement_plan_impressions', 'placement_plan_reach', 'placement_plan_views', 'placement_plan_weeks']
-    LIST_OF_PLACEMENT_STATS_FIELDS = ['placement_stats_adriverid', 'placement_stats_dcmid', 'placement_stats_tnscampaign','placement_stats_utmcampaign', 'placement_stats_ymcounter']
+
+class mongoDB():
+
     client = MongoClient('localhost', 27017)
     db = client['VizeumHealth']
     collection = db['Placements']
-    collection.update_one({PLACEMENT_ID:placement_id}, {"$set": {field:value}}, upsert=True)
+
+    def updatePlacement(self, placement_id, field, value):
+        PLACEMENT_ID = 'placement_id'
+        self.collection.update_one({PLACEMENT_ID:placement_id}, {"$set": {field:value}}, upsert=True)
+        #return self.collection.find_one({"creatives_list": {"creative_id":creative_id}})
+        #self.collection.update_one({PLACEMENT_ID:placement_id}, {"$set": {field:value}}, upsert=True)
 
 
 if __name__ == '__main__':
